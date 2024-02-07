@@ -4,7 +4,7 @@
     <title>NES Encoder</title>
     <script>
       function convert() {
-        
+        console.log(document.getElementById("convertme"))
       }
       function readFile() {
         var toreturn = ""
@@ -27,7 +27,7 @@
   <body>
     <h1>BETA</h1>
     <h1>File to convert:</h1>
-    <input type="file" id="convertme" name="convertme" accept=".nes .txt"/>
-    <button onclick="convert()">Convert<button>
+    <input type="file" id="convertme" name="convertme" accept=".nes, .txt"/>
+    <button onclick="convert()">Convert</button>
   </body>
 </html>
