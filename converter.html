@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NES Encoder</title>
+    <script>
+      function convert() {
+        
+      }
+      function readFile() {
+        var toreturn = ""
+        fs.open('file.txt', 'r', function(err, fd) {
+        if (err)
+          throw err;
+        var buffer = Buffer.alloc(1);
+        while (true)
+        {   
+          var num = fs.readSync(fd, buffer, 0, 1, null);
+          if (num === 0)
+            break;
+          toreturn += String(num)
+        }
+      });
+        return toreturn
+      }
+    </script>
+  </head>
+  <body>
+    <h1>BETA</h1>
+    <h1>File to convert:</h1>
+    <input type="file" id="convertme" name="convertme" accept=".nes .txt"/>
+    <button onclick="convert()">Convert<button>
+  </body>
+</html>
