@@ -3,13 +3,13 @@
   <head>
     <script>
       function redirect() {
-        document.getElementById("iframe").src = document.getElementById("redirecturl").value
+        document.getElementById("frame").src = document.getElementById("redirecturl").value
       }
     </script>
   </head>
   <body>
     <a href="https://github.com">Go Back</a>
-    <input type="text" id="redirurl"> <button onclick="redirect()">Redirect</button><br>
-    <iframe src="https://scratch.mit.edu" id="iframe" height="100vh" width="100vw" style="border: none"></iframe>
+    <input type="text" id="redirurl"> <button onclick="redirect()">Redirect</button> <br>
+    <iframe src="https://scratch.mit.edu" id="frame" height="100vh" width="100vw" style="border: none"></iframe>
   </body>
 </html>
