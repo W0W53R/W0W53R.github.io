@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function redirect() {
+        document.getElementById("iframe").src = document.getElementById("redirecturl").value
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="redirurl"> <button onpress="redirect()">Redirect</button>
+    <iframe src="google.com" id="iframe"></iframe>
+  </body>
+</html>
