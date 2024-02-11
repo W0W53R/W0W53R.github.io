@@ -29,7 +29,19 @@
   <iframe id="website-iframe" src="about:blank"></iframe>
 
   <script>
-    // Same JavaScript code as before...
+const websiteLinkInput = document.getElementById('website-link');
+    const loadButton = document.getElementById('load-button');
+    const websiteIframe = document.getElementById('website-iframe');
+
+    loadButton.addEventListener('click', function() {
+      const websiteUrl = websiteLinkInput.value;
+      if (!websiteUrl) {
+        alert('Please enter a website URL');
+        return;
+      }
+
+      websiteIframe.src = websiteUrl;
+    });    
   </script>
 </body>
 </html>
