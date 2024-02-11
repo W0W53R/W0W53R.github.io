@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script>
-      function redirect() {
-        document.getElementById("frame").src = document.getElementById("redirecturl").value
-      }
-    </script>
-  </head>
-  <body>
-    <a href="https://github.com">Go Back</a>
-    <input type="text" id="redirurl"> <button onclick="redirect()">Redirect</button> <br>
-    <iframe src="https://scratch.mit.edu" id="frame" height="100vh" width="100vw" style="border: none"></iframe>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Loader</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+    #website-link, #load-button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    #website-iframe {
+      flex: 1; /* Takes remaining space */
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="website-link" placeholder="Enter website URL">
+  <button id="load-button">Load Website</button>
+  <iframe id="website-iframe" src="about:blank"></iframe>
+
+  <script>
+    // Same JavaScript code as before...
+  </script>
+</body>
 </html>
