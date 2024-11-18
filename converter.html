@@ -1,33 +1,70 @@
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>NES Encoder</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte to Decimal Converter</title>
+</head>
+<body>
+    <h1>Byte to Decimal Converter</h1>
+    <p>Select a file to convert its bytes to decimal equivalents:</p>
+    <input type="file" id="fileInput">
+    <button id="convertButton">Convert and Download</button>
+    <button id="convertAndCopyButton">Convert and Copy to Clipboard</button>
     <script>
-      function convert() {
-        console.log(document.getElementById("convertme").value)
-      }
-      function readFile() {
-        var toreturn = ""
-        fs.open('file.txt', 'r', function(err, fd) {
-        if (err)
-          throw err;
-        var buffer = Buffer.alloc(1);
-        while (true)
-        {   
-          var num = fs.readSync(fd, buffer, 0, 1, null);
-          if (num === 0)
-            break;
-          toreturn += String(num)
-        }
-      });
-        return toreturn
-      }
+        document.getElementById('convertButton').addEventListener('click', () => {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files.length) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const arrayBuffer = event.target.result;
+                const uint8Array = new Uint8Array(arrayBuffer);
+                const decimalValues = Array.from(uint8Array).join(' ');
+
+                const blob = new Blob([decimalValues], { type: 'text/plain' });
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = file.name + ".txt";
+                downloadLink.click();
+            };
+
+            reader.onerror = function() {
+                alert('Error reading file!');
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+        document.getElementById('convertAndCopyButton').addEventListener('click', () => {
+            alert("asdf")
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files.length) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const arrayBuffer = event.target.result;
+                const uint8Array = new Uint8Array(arrayBuffer);
+                const decimalValues = Array.from(uint8Array).join(' ');
+                navigator.clipboard.writeText(decimalValues).then(function(){ alert("Clipboard filled") })
+            };
+
+            reader.onerror = function() {
+                alert('Error reading file!');
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
     </script>
-  </head>
-  <body>
-    <h1>BETA</h1>
-    <h1>File to convert:</h1>
-    <input type="file" id="convertme" name="convertme" accept=".nes, .txt"/>
-    <button onclick="convert()">Convert</button>
-  </body>
+</body>
 </html>
