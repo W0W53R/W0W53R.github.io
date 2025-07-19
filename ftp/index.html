@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebFTP</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="networking.js"></script>
+</head>
+<body>
+
+  <h1>WebFTP</h1>
+
+  <div class="section" id="connection">
+    <h2>Connection</h2>
+    <label for="room">Room Name:</label>
+    <input type="text" id="room" placeholder="Enter room name">
+
+    <button id="connectToRoom">Connect</button>
+
+    <div class="status">
+      Connection State: <span id="connectionState">Disconnected</span>
+    </div>
+  </div>
+
+  <div class="section" id="transmit">
+    <h2>Transmit</h2>
+    <label for="sendFile">File:</label>
+    <input type="file" id="sendFile">
+    <button id="sendFileButton" disabled>Send</button>
+  </div>
+
+  <div class="section" id="receive">
+    <h2>Receive</h2>
+    <div class="status">
+      File List:
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
