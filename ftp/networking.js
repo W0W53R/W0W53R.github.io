@@ -57,11 +57,11 @@ class BufferReader {
     }
 
     address() {
-        return {
-            network: this.u32(),
-            node: [...new Uint8Array(this.bytes(6))].map(e => e.toString(16)).join(":"),
-            socket: this.u16()
-        }
+        return new NetworkAddress(
+            this.u32(),
+            [...new Uint8Array(this.bytes(6))].map(e => e.toString(16)).join(":"),
+            this.u16()
+        )
     }
 
     rest() {
@@ -152,6 +152,52 @@ class BufferWriter {
 }
 
 // network.js
+class NetworkAddress {
+    /** @type {number} */
+    network;
+    /** @type {string | Uint8Array} */
+    node;
+    /** @type {number} */
+    socket;
+    /**
+     * 
+     * @param {number} network - The network
+     * @param {string | Uint8Array} node - The address
+     * @param {number} socket - The socket ID
+     */
+    constructor(network, node, socket) {
+        this.network = network;
+        this.node = node;
+        this.socket = socket;
+    }
+
+    static Broadcast = new NetworkAddress(0, "ff:ff:ff:ff:ff:ff", 0)
+}
+
+class NetworkMessage {
+    /** @type {number} */
+    type;
+    /** @type {NetworkAddress} */
+    to;
+    /** @type {NetworkAddress} */
+    from;
+    /** @type {ArrayBuffer} */
+    data;
+    /**
+     * 
+     * @param {number} type - The type of message
+     * @param {NetworkAddress} to 
+     * @param {NetworkAddress} from 
+     * @param {ArrayBuffer} data 
+     */
+    constructor(type, to, from, data) {
+        this.type = type;
+        this.to = to;
+        this.from = from;
+        this.data = data;
+    }
+}
+
 class Connection {
     static STATES = {
         DISCONNECTED: "disconnected",
@@ -203,12 +249,12 @@ class Connection {
                         const data = r.bytes(length - 12 - 12 - 2 - 2 - 1 - 1); // Subtract header size
                         if (this.state == Connection.STATES.CONNECTED) {
                             this.handlers["data"].forEach(handle => {
-                                handle({
-                                    type: type,
-                                    to: destination.node,
-                                    from: source.node,
-                                    data: data
-                                })
+                                handle(new NetworkMessage(
+                                    type,
+                                    destination.node,
+                                    source.node,
+                                    data
+                                ))
                             });
                         } else {
                             // Get this connection id
